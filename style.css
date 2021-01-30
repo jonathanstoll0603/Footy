@@ -1,0 +1,13 @@
+.carousel  {
+height: 550px;
+width: 600px;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+
+.orbit-caption {
+
+font-size: larger;
+
+}
