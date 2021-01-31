@@ -21,7 +21,7 @@ $(document).ready(function () {
         "url": "https://livescore-football.p.rapidapi.com/soccer/news-list?page=1",
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": "ff0210cd47msh983c81cf4ee3a53p1bc6d3jsn78402c8c5e1a",
+            // "x-rapidapi-key": "ff0210cd47msh983c81cf4ee3a53p1bc6d3jsn78402c8c5e1a",
             "x-rapidapi-host": "livescore-football.p.rapidapi.com"
         }
     };
