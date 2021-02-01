@@ -174,39 +174,37 @@ $(document).ready(function () {
       var stadium = response.api.teams[0].venue_name;
       var stadiumCap = response.api.teams[0].venue_capacity;
 
-      var cardLeftMain = $("<div>")
-        .addClass("card card-left-main")
-        .appendTo($(".cell-left-main"));
+
 
       var teamLogo = $("<img style='width:75px; height:75px'>")
         .addClass("team-logo")
         .attr("src", logo)
-        .appendTo(cardLeftMain);
+        .appendTo($(".divL"));
 
       var teamName = $("<h5>")
         .addClass("team-name")
         .text(name)
-        .appendTo(cardLeftMain);
+        .appendTo($(".secL"));
 
       var foundingDate = $("<p>")
         .addClass("founding-date")
-        .text("Founded :" + founding)
-        .appendTo(cardLeftMain);
+        .text("Founded: " + founding)
+        .appendTo($(".secL"));
 
       var teamCountry = $("<p>")
         .addClass("team-country")
-        .text("Country :" + country)
-        .appendTo(cardLeftMain);
+        .text("Country: " + country)
+        .appendTo($(".secL"));
 
       var teamStadium = $("<p>")
         .addClass("team-stadium")
         .text("Stadium: " + stadium)
-        .appendTo(cardLeftMain);
+        .appendTo($(".secL"));
 
       var teamStadiumCap = $("<p>")
         .addClass("team-stadium-cap")
         .text("Capacity: " + stadiumCap)
-        .appendTo(cardLeftMain);
+        .appendTo($(".secL"));
 
       // Gets current team wins and lineups
       function getTeamWinsLineups() {
@@ -244,15 +242,18 @@ $(document).ready(function () {
               cupWins++;
             }
           }
-          console.log(titleWins, cupWins);
-          var leagueTitles = $("<h5>")
-            .addClass("titles-list")
-            .text("Total League Titles: " + titleWins)
-            .appendTo($(".card-center-main"));
-          var cupTitles = $("<h5>")
-            .addClass("titles-list")
+          var Titles = $("<h4>")
+            .addClass("titles")
+            .text("Titles Won")
+            .appendTo($(".divM"));
+          var leagueTitles = $("<p>")
+            .addClass("league-titles")
+            .text("League Titles: " + titleWins)
+            .appendTo($(".secM"))
+          var cupTitles = $("<p>")
+            .addClass("cup-list")
             .text("Total Cup Titles: " + cupWins)
-            .appendTo($(".card-center-main"));
+            .appendTo($(".secM"));
         });
       }
       function getStartingLineup() {
@@ -276,24 +277,10 @@ $(document).ready(function () {
         $.ajax(searchTeamStats).done(function (response) {
           console.log(response);
 
-          var startingLineupCard = $("<div>")
-            .addClass("card card-right-main")
-            .appendTo($(".cell-right-main"));
-
-          var lineupHeader = $("<h5>")
+          var lineupHeader = $("<h4>")
             .addClass("starting-lineup-header")
             .text("Starting Lineup:")
-            .appendTo(startingLineupCard);
-
-          var name = $("<p style='display: inline-block'>")
-            .addClass("name-column")
-            .appendTo(startingLineupCard);
-          var position = $("<p style='display: inline-block'>")
-            .addClass("position-column")
-            .appendTo(startingLineupCard);
-          var age = $("<p style='display: inline-block'>")
-            .addClass("age-column")
-            .appendTo(startingLineupCard);
+            .appendTo($(".divR"));
 
           var startingLineup = response.api.players;
 
@@ -301,11 +288,12 @@ $(document).ready(function () {
             var playerName = startingLineup[i].player_name;
             var playerPosition = startingLineup[i].position;
             var playerAge = startingLineup[i].age;
-            var playerInfoCol = $("<p>")
+            var playerInfoCol = $("<p style='font-size: 10px'>")
+              .addClass("lineup-col")
               .text(
                 playerName + " " + "(" + playerAge + ")" + ", " + playerPosition
               )
-              .appendTo(name);
+              .appendTo($(".secR"));
           }
         });
       }
