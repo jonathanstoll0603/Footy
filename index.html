@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css"
     integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/motion-ui@1.2.3/dist/motion-ui.min.css" />
+  <link href="./assets/css/marquee.css" rel="stylesheet" />
   <link href="./assets/css/style.css" rel="stylesheet" />
 
   <!-- Script links (all with defer)-->
@@ -23,6 +24,7 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js"
     integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+  <script defer src="./assets/js/marquee.js"></script>
   <script defer src="./assets/js/main.js"></script>
 </head>
 
@@ -30,97 +32,129 @@
   <div id="page-container">
     <div id="content-wrap">
       <!-- foundation sample nav/top bar -->
-      <div class="top-bar">
-        <div class="top-bar-left">
-          <ul class="dropdown menu" data-dropdown-menu>
-            <li class="menu-text">Site Title</li>
-            <li>
-              <a href="#">One</a>
-              <ul class="menu vertical">
-                <li><a href="#">One</a></li>
+      <div class="top-bar-container" data-sticky-container>
+        <div class="sticky sticky-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
+          <div class="top-bar">
+            <div class="top-bar-left">
+              <ul class="dropdown menu" data-dropdown-menu>
+                <li class="menu-text">Site Title</li>
+                <li>
+                  <a href="#">One</a>
+                  <ul class="menu vertical">
+                    <li><a href="#">One</a></li>
+                    <li><a href="#">Two</a></li>
+                    <li><a href="#">Three</a></li>
+                  </ul>
+                </li>
                 <li><a href="#">Two</a></li>
                 <li><a href="#">Three</a></li>
               </ul>
-            </li>
-            <li><a href="#">Two</a></li>
-            <li><a href="#">Three</a></li>
-          </ul>
-        </div>
-        <div class="top-bar-right">
-          <ul class="menu">
-            <li><input type="search" placeholder="Search" /></li>
-            <li><button type="button" class="button">Search</button></li>
-          </ul>
+            </div>
+            <div class="top-bar-right">
+              <ul class="menu">
+                <li><input type="search" placeholder="Search" /></li>
+                <li><button type="button" class="button">Search</button></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- foundation sample orbit/carousel example -->
-      <div class="carousel container" region aria-label="Favorite Space Pictures" data-orbit>
-        <div class="carousel-wrapper">
-          <div class="orbit-controls">
-            <button class="orbit-previous">
-              <span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;
-            </button>
-            <button class="orbit-next">
-              <span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;
-            </button>
+      <!-- ticker bar -->
+      <div class="grid-x">
+        <div class="cell">
+          <div class="content">
+            <div class="simple-marquee-container">
+              <div class="marquee-sibling">
+                Latest Results:
+              </div>
+              <div class="marquee">
+                <ul class="marquee-content-items">
+                  <li><a href="#">Item 1</a></li>
+                  <li><a href="#">Item 2</a></li>
+                  <li><a href="#">Item 3</a></li>
+                  <li><a href="#">Item 4</a></li>
+                  <li><a href="#">Item 5</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <ul class="orbit-container">
-            <li class="is-active orbit-slide">
-              <figure class="orbit-figure">
-                <img class="orbit-image" src="https://i.ytimg.com/vi/GFcpgg8DPB8/maxresdefault.jpg"
-                  alt="Penalty MEME" />
-                <figcaption class="orbit-caption">How many .</figcaption>
-              </figure>
-            </li>
-            <li class="orbit-slide">
-              <figure class="orbit-figure">
-                <img class="orbit-image"
-                  src="http://img01.thedrum.com/s3fs-public/drum_basic_article/156824/main_images/ManchesterUnitedLogo_0.png"
-                  alt="Manchester" />
-                <figcaption class="orbit-caption">Lets Rocket!</figcaption>
-              </figure>
-            </li>
-            <li class="orbit-slide">
-              <figure class="orbit-figure">
-                <img class="orbit-image"
-                  src="https://th.bing.com/th/id/R18ae7eee8b3da2bad5da02453a7be815?rik=tharpRoH8C2iEQ&riu=http%3a%2f%2fupl.stack.com%2fwp-content%2fuploads%2f2014%2f04%2f18191616%2fSoccer-Sprint-Stack.jpg&ehk=fxORhMax4E%2bpGuDGK3Uv%2bQL72B%2fp50gsRd7wyO8CITE%3d&risl=&pid=ImgRaw"
-                  alt="Space" />
-                <figcaption class="orbit-caption">Encapsulating</figcaption>
-              </figure>
-            </li>
-            <li class="orbit-slide">
-              <figure class="orbit-figure">
-                <img class="orbit-image"
-                  src="https://www.finance-monthly.com/Finance-Monthly/wp-content/uploads/2018/07/WorldCupImage.jpg"
-                  alt="World Cup" />
-                <figcaption class="orbit-caption">Outta This World</figcaption>
-              </figure>
-            </li>
-          </ul>
         </div>
-        <nav class="orbit-bullets">
-          <button class="is-active" data-slide="0">
-            <span class="show-for-sr">First slide details.</span>
-            <span class="show-for-sr" data-slide-active-label>Current Slide</span>
-          </button>
-          <button data-slide="1">
-            <span class="show-for-sr">Second slide details.</span>
-          </button>
-          <button data-slide="2">
-            <span class="show-for-sr">Third slide details.</span>
-          </button>
-          <button data-slide="3">
-            <span class="show-for-sr">Fourth slide details.</span>
-          </button>
-        </nav>
       </div>
 
       <div class="grid-container fluid">
         <div class="grid-x grid-margin-x">
+          <div class="cell small-4 align-center-middle text-center"></div>
+          <div class="cell small-4 align-center-middle text-center">
+
+            <!-- foundation sample orbit/carousel example -->
+            <div class="orbit" region aria-label="Favorite Space Pictures" data-orbit>
+              <div class="orbit-wrapper">
+                <div class="orbit-controls">
+                  <button class="orbit-previous">
+                    <span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;
+                  </button>
+                  <button class="orbit-next">
+                    <span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;
+                  </button>
+                </div>
+                <ul class="orbit-container">
+                  <li class="is-active orbit-slide">
+                    <figure class="orbit-figure">
+                      <img class="orbit-image" src="https://i.ytimg.com/vi/GFcpgg8DPB8/maxresdefault.jpg"
+                        alt="Penalty MEME" />
+                      <figcaption class="orbit-caption">How many .</figcaption>
+                    </figure>
+                  </li>
+                  <li class="orbit-slide">
+                    <figure class="orbit-figure">
+                      <img class="orbit-image"
+                        src="http://img01.thedrum.com/s3fs-public/drum_basic_article/156824/main_images/ManchesterUnitedLogo_0.png"
+                        alt="Manchester" />
+                      <figcaption class="orbit-caption">Lets Rocket!</figcaption>
+                    </figure>
+                  </li>
+                  <li class="orbit-slide">
+                    <figure class="orbit-figure">
+                      <img class="orbit-image"
+                        src="https://th.bing.com/th/id/R18ae7eee8b3da2bad5da02453a7be815?rik=tharpRoH8C2iEQ&riu=http%3a%2f%2fupl.stack.com%2fwp-content%2fuploads%2f2014%2f04%2f18191616%2fSoccer-Sprint-Stack.jpg&ehk=fxORhMax4E%2bpGuDGK3Uv%2bQL72B%2fp50gsRd7wyO8CITE%3d&risl=&pid=ImgRaw"
+                        alt="Space" />
+                      <figcaption class="orbit-caption">Encapsulating</figcaption>
+                    </figure>
+                  </li>
+                  <li class="orbit-slide">
+                    <figure class="orbit-figure">
+                      <img class="orbit-image"
+                        src="https://www.finance-monthly.com/Finance-Monthly/wp-content/uploads/2018/07/WorldCupImage.jpg"
+                        alt="World Cup" />
+                      <figcaption class="orbit-caption">Outta This World</figcaption>
+                    </figure>
+                  </li>
+                </ul>
+              </div>
+              <nav class="orbit-bullets">
+                <button class="is-active" data-slide="0">
+                  <span class="show-for-sr">First slide details.</span>
+                  <span class="show-for-sr" data-slide-active-label>Current Slide</span>
+                </button>
+                <button data-slide="1">
+                  <span class="show-for-sr">Second slide details.</span>
+                </button>
+                <button data-slide="2">
+                  <span class="show-for-sr">Third slide details.</span>
+                </button>
+                <button data-slide="3">
+                  <span class="show-for-sr">Fourth slide details.</span>
+                </button>
+              </nav>
+            </div>
+          </div>
+          <div class="cell small-4 align-center-middle text-center"></div>
+          <!-- search section -->
           <div id="search-results" class="search-container cell small-2 small-cell-block-y">
             Search Cell
           </div>
+          <!-- main content section -->
           <div id="main-container" class="main-container cell small-7 small-cell-block-y">
             <div class="button-selection grid-x">
               <a class="success cell small-4 button statistics">Statistics</a>
@@ -153,6 +187,8 @@
         </div>
       </div>
     </div>
+
+    <!-- footer section -->
     <footer class="grid-x" id="footer">
       <div class="cell auto">footer left</div>
       <div class="cell auto text-center">footer center</div>

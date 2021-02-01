@@ -5,6 +5,11 @@ body {
     height: auto;
 }
 
+/* Top bar container - make sure when scrolling that top bar remains in front of all passing elements */
+.top-bar-container {
+	z-index: 9999;
+}
+
 /* Grid container and it's sections below */
 .grid-container {
     margin-top: 20px;
@@ -35,18 +40,6 @@ body {
     border-bottom: 1px solid #000;
   }
   
-.carousel  {
-    height: 550px;
-    width: 600px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    }
-    
-.orbit-caption {    
-    font-size: larger;
-    }
-
 #page-container {
     position: relative;
     min-height: 100vh;
