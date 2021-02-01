@@ -2,6 +2,8 @@
 $(document).ready(function () {
   // initialize foundation plugin.
   $(document).foundation();
+  // initialize marquee plugin.
+  $('.simple-marquee-container').SimpleMarquee();
 
   // global variables
   var today;
