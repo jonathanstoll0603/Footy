@@ -178,15 +178,15 @@ $(document).ready(function () {
 
 
 
-      var teamLogo = $("<img style='width:75px; height:75px'>")
+      var teamLogo = $("<img style='width:50px; height:50px'>")
         .addClass("team-logo")
         .attr("src", logo)
         .appendTo($(".divL"));
 
-      var teamName = $("<h5>")
+      var teamName = $("<h4>")
         .addClass("team-name")
         .text(name)
-        .appendTo($(".secL"));
+        .appendTo($(".divL"));
 
       var foundingDate = $("<p>")
         .addClass("founding-date")
@@ -237,6 +237,7 @@ $(document).ready(function () {
           var titleWins = 0;
           var cupWins = 0;
 
+          // loops through total tital wins and adds +1 depeding on if it was a league title or cup title
           for (var i = 0; i < titles.length; i++) {
             if (titles[i].type == "League") {
               titleWins++;
@@ -244,6 +245,7 @@ $(document).ready(function () {
               cupWins++;
             }
           }
+          // Appends titles won (league and cup)
           var Titles = $("<h4>")
             .addClass("titles")
             .text("Titles Won")
@@ -254,10 +256,11 @@ $(document).ready(function () {
             .appendTo($(".secM"))
           var cupTitles = $("<p>")
             .addClass("cup-list")
-            .text("Total Cup Titles: " + cupWins)
+            .text("Cup Titles: " + cupWins)
             .appendTo($(".secM"));
         });
       }
+      // function that gets the starting lineup of a club
       function getStartingLineup() {
         var currentSeason = 2019; // Could use new Date() for teams with up to date lineups.. until then use 2019
         const searchTeamStats = {
@@ -277,30 +280,72 @@ $(document).ready(function () {
         };
 
         $.ajax(searchTeamStats).done(function (response) {
-          console.log(response);
+          // console.log(response);
 
+          // Lineup header appended to divR
           var lineupHeader = $("<h4>")
             .addClass("starting-lineup-header")
-            .text("Starting Lineup:")
+            .text("Current Lineup:")
             .appendTo($(".divR"));
 
+          // object shortcut variable
           var startingLineup = response.api.players;
-
+          // loops 11 times to get the starting 11 players
           for (var i = 0; i < 11; i++) {
             var playerName = startingLineup[i].player_name;
             var playerPosition = startingLineup[i].position;
             var playerAge = startingLineup[i].age;
-            var playerInfoCol = $("<p style='font-size: 10px'>")
+            var playerInfoCol = $("<p style='font-size: 12px'>")
               .addClass("lineup-col")
               .text(
-                playerName + " " + "(" + playerAge + ")" + ", " + playerPosition
+                playerName + ", " + playerPosition
               )
               .appendTo($(".secR"));
           }
         });
       }
-      getStartingLineup();
-      getTeamWinsLineups();
+
+      // Function that retrieves upcoming fixture information
+      function getUpcomingFixtures() {
+        const upcomingFixtures = {
+          async: true,
+          crossDomain: true,
+          url:
+            "https://api-football-v1.p.rapidapi.com/v2/fixtures/team/" +
+            teamID,
+          method: "GET",
+          headers: {
+            "x-rapidapi-key":
+              "a62afeb123msh75f0a7b08cdeb06p120e70jsn9ea6adc294d7",
+            "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
+          },
+        };
+
+        $.ajax(upcomingFixtures).done(function (response) {
+          console.log(response);
+          // object shortcut variable
+          var fixtures = response.api.fixtures;
+          
+          // Returns 5 values
+          for (var k = 0; k < 5; k++) {
+            // If the match status is not FT (full time)
+            if (fixtures[k].statusShort != "FT") {
+              console.log(fixtures[k].awayTeam.team_name + " vs. " + fixtures[k].homeTeam.team_name);
+
+              // Stores variables for home team, away team, logos, match date, and match type
+              var homeTeam = fixtures[k].homeTeam.team_name;
+              var homeLogo = fixtures[k].homeTeam.logo;
+              var awayTeam = fixtures[k].awayTeam.team_name;
+              var awayLogo = fixtures[k].awayTeam.logo;
+              var matchDate = fixtures[k].event_date;
+              var matchType = fixtures[k].league.name;
+            } 
+          }
+        })
+      }
+      // getStartingLineup();
+      // getTeamWinsLineups();
+      // getUpcomingFixtures();
     });
   }
 
