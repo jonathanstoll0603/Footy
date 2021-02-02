@@ -2,11 +2,10 @@
 $(document).ready(function () {
   // initialize foundation plugin.
   $(document).foundation();
-  // initialize marquee plugin.
-  $('.simple-marquee-container').SimpleMarquee();
 
   // global variables
   var today;
+  var today_YYYYMMDD;
   var refreshData = false;
   var storedHeadlineData = [];
 
@@ -15,6 +14,7 @@ $(document).ready(function () {
 
   // initial function calls.
   initialDateLogic();
+  getTickerData();
   buildHeadlineSection();
 
   // function to do initial date logic work.
@@ -25,6 +25,7 @@ $(document).ready(function () {
     var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     var yyyy = today.getFullYear();
     today = mm + "/" + dd + "/" + yyyy;
+    today_YYYYMMDD = yyyy + mm + dd;
 
     // get stored date from localStorage.
     var savedDate = localStorage.getItem("savedDate");
@@ -96,7 +97,7 @@ $(document).ready(function () {
 
       // call livescore api.
       $.ajax(livescoreParams).done(function (response) {
-        console.log("**** livescore API used ****"); //DEBUG - REMOVE WHEN GOING LIVE.
+        console.log("**** livescore (headlines) API used ****"); //DEBUG - REMOVE WHEN GOING LIVE.
         // as we are pulling new data to display update the saved date in local storage to todays date.
         localStorage.setItem("savedDate", today);
         // clear out old headline data from local storage before loading new data.
@@ -325,7 +326,7 @@ $(document).ready(function () {
           console.log(response);
           // object shortcut variable
           var fixtures = response.api.fixtures;
-          
+
           // Returns 5 values
           for (var k = 0; k < 5; k++) {
             // If the match status is not FT (full time)
@@ -339,7 +340,7 @@ $(document).ready(function () {
               var awayLogo = fixtures[k].awayTeam.logo;
               var matchDate = fixtures[k].event_date;
               var matchType = fixtures[k].league.name;
-            } 
+            }
           }
         })
       }
@@ -349,13 +350,102 @@ $(document).ready(function () {
     });
   }
 
-  getTeamOverview();
+  // getTeamOverview();
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
   // **
   // **  <end> statistics section js code <end>
   // **
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+  // **  
+  // **  <start> populate ticker with data <start>
+  // **  
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+
+  function getTickerData() {
+    if (refreshData) {
+      // refresh true therefore we will call the livescore API and pull new data for the ticker.
+      callTickerApi();
+    } else {
+      // refresh false therefore we will use the saved ticker data from local storage.
+      // call function to render ticker data to the screen.
+      var storedTickerData = getTickerDataFromLocalStorage();
+      renderTickerData(storedTickerData);
+    }
+
+    function callTickerApi() {
+
+      const tickerSettings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://livescore-football.p.rapidapi.com/soccer/matches-by-date?date=" + today_YYYYMMDD,
+        "method": "GET",
+        "headers": {
+          "x-rapidapi-key": "ff0210cd47msh983c81cf4ee3a53p1bc6d3jsn78402c8c5e1a",
+          "x-rapidapi-host": "livescore-football.p.rapidapi.com"
+        }
+      };
+
+      $.ajax(tickerSettings).done(function (response) {
+        console.log("**** livescore (ticker) API used ****"); //DEBUG - REMOVE WHEN GOING LIVE.
+        storeTickerDataInLocalStorage(response);
+        renderTickerData(response);
+      });
+    }
+
+    // store ticker data into local storage.
+    function storeTickerDataInLocalStorage(tickerData) {
+      localStorage.setItem("tickerData", JSON.stringify(tickerData));
+    }
+
+    // retrieve ticker data from local storage.
+    function getTickerDataFromLocalStorage() {
+      return JSON.parse(localStorage.getItem("tickerData"));
+    }
+
+    // render ticker data to the screen.
+    function renderTickerData(tickerData) {
+      var dateData = $("<li>").css({ 'color': 'aqua', 'font-weight': 'bold' }).text("Latest Games For " + today);
+      $(".marquee-content-items").append(dateData);
+      for (var i = 0; i < 5; i++) {
+        var leagueName = tickerData.data[i].league_name;
+        var leagueCountry = tickerData.data[i].country_name;
+        var leagueData = $("<li>").css({ 'color': 'black', 'font-weight': 'bold' }).text(leagueName + " (" + leagueCountry + "):");
+        $(".marquee-content-items").append(leagueData);
+        for (var j = 0; j < tickerData.data[i].matches.length; j++) {
+          var homeTeamName = tickerData.data[i].matches[j].team_1.name;
+          if (tickerData.data[i].matches[j].status === "FT") {
+            var scoreText = " " + tickerData.data[i].matches[j].score.full_time.team_1 + " - " + tickerData.data[i].matches[j].score.full_time.team_2 + " ";
+          }
+          else {
+            var scoreText = " v ";
+          }
+          var awayTeamName = tickerData.data[i].matches[j].team_2.name;
+          var gameData = $("<li>").text(homeTeamName + scoreText + awayTeamName);
+          $(".marquee-content-items").append(gameData);
+        }
+      }
+      let options = {
+        duration: 200000
+      }
+      // initialize marquee plugin.
+      $('.simple-marquee-container').SimpleMarquee(options);
+    }
+  }
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+  // **  
+  // **  <end> populate ticker with data <end>
+  // **  
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
