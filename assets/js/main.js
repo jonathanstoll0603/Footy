@@ -134,7 +134,102 @@ $(document).ready(function () {
   // **  <end> headline section js code <end>
   // **
   // ************************************************************************************
-  // ************************************************************************************
+
+
+  //Global Variable
+  var teamSearch = $("#search-value").val();
+  var savedSearches = [];
+
+  function saveSearch() {
+
+   // teamSearch = $("#search-value").val();
+    localStorage.setItem("search-value",teamSearch);
+    console.log(saveSearch);
+  }
+  function renderPastSearchHistory() {
+
+    var lastSearch = JSON.parse(localStorage.getItem("teamSearch"));
+    console.log(teamSearch);
+    if (lastSearch !== null) {
+
+      $("#search-value")
+
+    }
+  }
+  // search button Click Event
+
+  $("#search-button").on("click", function () {
+     teamSearch = $("#search-value").val();
+
+
+    // clear input box
+
+   // $("#search-value").val("");
+
+    getTeamOverview(teamSearch);
+    saveSearch();
+    $("#search-value").val("");
+
+  })
+ 
+
+
+  /* $(".history").on("click", "li", function () {
+  
+    searchTeam($(this).text());
+  
+  
+  });
+  
+  
+  function makeRow(text) {
+  
+    var li = $("<li>").addclass("list-group-item list-group-action").text(text);
+  
+    $(".history").append(li);
+  
+  
+  
+  }
+  
+  // History links for searches
+  
+  
+  /*
+  success: function (data) {
+  
+  
+    if (history.indexOf(teamSearch) === -1) {
+        history.pushState(teamSearch);
+        window.localStorage.setItem("history", JSON.stringify(history));
+  
+        makeRow(teamSearch);
+        console.log(teamSearch);
+  
+    }
+  }
+  /* Current history
+  
+  var history = JSON.parse(window.localStorage.getItem("history")) || [];
+  
+  if (history.length > 0) {
+      searchTeam(history[history.length - 1]);
+  }
+  
+  for (var i = 0; i < history.length; i++) {
+      makeRow(history[i]);
+  }
+  */
+
+
+
+
+
+
+
+
+
+
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
@@ -146,10 +241,9 @@ $(document).ready(function () {
   // ************************************************************************************
   // ************************************************************************************
   // Stores the value of the teamSearchBtn input by user and places it inside url
-  var teamSearch = "Real_Madrid"; // $("#teamSearchBtn").val();
 
   //Calls left cell of main container
-  function getTeamOverview() {
+  function getTeamOverview(teamSearch) {
     // setup ajax livescore api parameters.
     const searchTeamInfo = {
       async: true,
@@ -325,7 +419,7 @@ $(document).ready(function () {
           console.log(response);
           // object shortcut variable
           var fixtures = response.api.fixtures;
-          
+
           // Returns 5 values
           for (var k = 0; k < 5; k++) {
             // If the match status is not FT (full time)
@@ -339,17 +433,17 @@ $(document).ready(function () {
               var awayLogo = fixtures[k].awayTeam.logo;
               var matchDate = fixtures[k].event_date;
               var matchType = fixtures[k].league.name;
-            } 
+            }
           }
         })
       }
-      // getStartingLineup();
-      // getTeamWinsLineups();
-      // getUpcomingFixtures();
+      // getStartingLineup(teamSearch);
+      //getTeamWinsLineups(teamSearch);
+      //getUpcomingFixtures(teamSearch);
     });
   }
 
-  getTeamOverview();
+
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
