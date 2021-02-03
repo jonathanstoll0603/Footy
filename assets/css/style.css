@@ -25,8 +25,9 @@ body {
     border: 2px solid black;
 }
 
+ /* gives buttons borders */
 .statistics {
-    border: 0.5px solid black; /*gives buttons borders*/
+    border: 0.5px solid black;
 }
 .videos {
     border: 0.5px solid black;
@@ -36,11 +37,54 @@ body {
 }
 
 .team-name {
-    text-align: center;
-    margin-top: 20px;
-    padding-left: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
 }
 
+.team-logo {
+    padding: 5px;
+}
+
+.card-top-main, .card-bottom-main {
+    margin: 0 auto;
+    text-align: center;
+    justify-content: center;
+}
+
+/* styling the headers above each card section */
+.matchups, .titles, .overview, .fixtures-header, .lineup-header {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Aligns all text in containers in the center */
+.secL, .secR, .secM, .secN {
+    text-align: center;
+    border: 1px solid black;
+}
+
+/* Team Logo sizing and spacing */
+.logo-home {
+    height: 25px;
+    width: 25px;
+}
+
+.logo-away {
+    height: 25px;
+    width: 25px;
+}
+
+/* bottom right main container content spacing */
+.match-type {
+    margin-bottom: -7.5px;
+}
+
+.match-date {
+    margin-bottom: 15px;
+}
 /* top headlines container */
 .headline {
     border-bottom: 1px solid #000;
