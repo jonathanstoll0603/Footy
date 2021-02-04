@@ -36,24 +36,11 @@
         <div class="sticky sticky-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
           <div class="top-bar">
             <div class="top-bar-left">
-              <ul class="dropdown menu" data-dropdown-menu>
-                <li class="menu-text">Site Title</li>
-                <li>
-                  <a href="#">One</a>
-                  <ul class="menu vertical">
-                    <li><a href="#">One</a></li>
-                    <li><a href="#">Two</a></li>
-                    <li><a href="#">Three</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Two</a></li>
-                <li><a href="#">Three</a></li>
-              </ul>
-            </div>
-            <div class="top-bar-right">
               <ul class="menu">
-                <li><input type="search" placeholder="Search" /></li>
-                <li><button type="button" class="button">Search</button></li>
+                <li class="menu-text site-title">Footy</li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Coming Soon</a></li>
+                <li><a href="#">Coming Soon</a></li>
               </ul>
             </div>
           </div>
@@ -147,7 +134,14 @@
           <div class="cell small-4 align-center-middle text-center"></div>
           <!-- search section -->
           <div id="search-results" class="search-container cell small-2 small-cell-block-y">
-            Search Cell
+            <div class="card">
+              <div class="card-divider">
+                <h4>Search Cell:</h4>
+              </div>
+              <div class="card-section">
+                <ul class="search-section"></ul>
+              </div>
+            </div>
           </div>
           <!-- main content section -->
           <div id="main-container" class="main-container cell small-7 small-cell-block-container">
@@ -190,9 +184,21 @@
 
     <!-- footer section -->
     <footer class="grid-x" id="footer">
-      <div class="cell auto">footer left</div>
-      <div class="cell auto text-center">footer center</div>
-      <div class="cell auto text-right">footer right</div>
+      <div class="cell small-12"></div>
+        <ul class="cell dropdown menu align-center" data-dropdown-menu="">
+          <li><a href="#">About the Developers</a></li>
+          <li><a href="https://github.com/jonathanstoll0603/Footy" target="_blank">Github Page</a></li>
+        <ul class="dropdown menu align-center" style="max-width: 250px;"></ul>
+          <li>
+            <a href="#">Contributors</a>
+            <ul class="menu">
+              <li><a href="https://www.linkedin.com/in/jdbell123/" target="_blank">John Bell</a></li>
+              <li><a href="https://www.linkedin.com/in/eiman-zarrinhonar/" target="_blank">Eiman Zarrinhonar</a></li>
+              <li><a href="https://www.linkedin.com/in/devantejohns/" target="_blank">Devante Andrew Johns SR</a></li>
+              <li><a href="https://www.linkedin.com/in/jonathan-stoll-092351133/" target="_blank">Jonathan Stoll</a></li>
+            </ul>
+          </li>
+        </ul>
     </footer>
   </div>
 </body>
