@@ -227,7 +227,6 @@ $(document).ready(function () {
         };
 
         $.ajax(searchTeamStats).done(function (response) {
-        console.log(response);
 
           // stores api response for the list of titles a team has won
           var titles = response.api.leagues;
@@ -348,7 +347,6 @@ $(document).ready(function () {
                 var awayLogo = fixtures[k].awayTeam.logo;
                 var matchDate = fixtures[k].event_date;
                 var matchType = fixtures[k].league.name;
-                console.log(matchDate)
                 
                 var type = $("<p style='font-size: 12px'>")
                 .addClass("match-type")
