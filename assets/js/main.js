@@ -135,102 +135,7 @@ $(document).ready(function () {
   // **  <end> headline section js code <end>
   // **
   // ************************************************************************************
-
-
-  //Global Variable
-  var teamSearch = $("#search-value").val();
-  var savedSearches = [];
-
-  function saveSearch() {
-
-   // teamSearch = $("#search-value").val();
-    localStorage.setItem("search-value",teamSearch);
-    console.log(saveSearch);
-  }
-  function renderPastSearchHistory() {
-
-    var lastSearch = JSON.parse(localStorage.getItem("teamSearch"));
-    console.log(teamSearch);
-    if (lastSearch !== null) {
-
-      $("#search-value")
-
-    }
-  }
-  // search button Click Event
-
-  $("#search-button").on("click", function () {
-     teamSearch = $("#search-value").val();
-
-
-    // clear input box
-
-   // $("#search-value").val("");
-
-    getTeamOverview(teamSearch);
-    saveSearch();
-    $("#search-value").val("");
-
-  })
- 
-
-
-  /* $(".history").on("click", "li", function () {
-  
-    searchTeam($(this).text());
-  
-  
-  });
-  
-  
-  function makeRow(text) {
-  
-    var li = $("<li>").addclass("list-group-item list-group-action").text(text);
-  
-    $(".history").append(li);
-  
-  
-  
-  }
-  
-  // History links for searches
-  
-  
-  /*
-  success: function (data) {
-  
-  
-    if (history.indexOf(teamSearch) === -1) {
-        history.pushState(teamSearch);
-        window.localStorage.setItem("history", JSON.stringify(history));
-  
-        makeRow(teamSearch);
-        console.log(teamSearch);
-  
-    }
-  }
-  /* Current history
-  
-  var history = JSON.parse(window.localStorage.getItem("history")) || [];
-  
-  if (history.length > 0) {
-      searchTeam(history[history.length - 1]);
-  }
-  
-  for (var i = 0; i < history.length; i++) {
-      makeRow(history[i]);
-  }
-  */
-
-
-
-
-
-
-
-
-
-
+  // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
@@ -242,6 +147,89 @@ $(document).ready(function () {
   // ************************************************************************************
   // ************************************************************************************
   // Stores the value of the teamSearchBtn input by user and places it inside url
+//
+  //Global Variable
+  var teamSearch = $("#search-value").val();
+  var savedSearches = [];
+  var searchList = $(".history");
+
+  function saveSearch() {
+
+   
+    localStorage.setItem("search-value", teamSearch);
+    console.log(saveSearch);
+  }
+  function renderPastSearchHistory() {
+
+    var lastSearch = localStorage.getItem("search-value");
+    console.log(lastSearch);
+
+    lastSearch.push(savedSearches);
+
+    for (var i = 0; i < savedSearches.length; i++) {
+      var searchHistoryList = $("<div>" + savedSearches[i] + "</div>"); 
+
+      searchList.append(searchHistoryList);
+
+    }
+
+
+
+    // if (lastSearch !== null) {
+
+    //   $("#search-value")
+
+    // }
+
+// this is how the list was made on my weather daashboard hw
+
+function makeList(){
+  let listItem = $("<li>").addClass("history").text(teamSearch);
+  $(".newClass/history").append(listItem);
+}
+const listHist = $("<li>").addClass("history").text(search-value);
+
+
+
+
+
+
+    for (var i = 0; i < savedSearches.length; i++) {
+      var save = savedSearches[i];
+
+      var li = $("<li>");
+
+      li.text(teamSearch);
+      li.appendTo$(".history");
+
+
+
+/*listHist.append(".history")
+$(".history")append(listHist);
+*/
+
+    }
+
+    //search button click event
+  }
+  $("#search-button").on("click", function () {
+    teamSearch = $("#search-value").val();
+
+
+
+   getTeamOverview(teamSearch);
+   //saveSearch();
+   $("#search-value").val("");
+
+ })
+
+
+
+
+
+
+
+
 
   //Calls left cell of main container
   function getTeamOverview(teamSearch) {
@@ -321,7 +309,7 @@ $(document).ready(function () {
         };
 
         $.ajax(searchTeamStats).done(function (response) {
-        console.log(response);
+          console.log(response);
 
           // stores api response for the list of titles a team has won
           var titles = response.api.leagues;
@@ -423,9 +411,9 @@ $(document).ready(function () {
 
           // Returns "Upcoming Fixtures headline"
           var futureHeadline = $("<p style='font-size: 18px'>")
-          .addClass("matchups")
-          .text("Upcoming Matchups")
-          .appendTo($(".secM"));
+            .addClass("matchups")
+            .text("Upcoming Matchups")
+            .appendTo($(".secM"));
 
           // Returns 5 values
           for (var k = 0; k < fixtures.length; k++) {
@@ -443,11 +431,11 @@ $(document).ready(function () {
                 var matchDate = fixtures[k].event_date;
                 var matchType = fixtures[k].league.name;
                 console.log(matchDate)
-                
+
                 var type = $("<p style='font-size: 12px'>")
-                .addClass("match-type")
-                .text(matchType)
-                .appendTo(".secM");
+                  .addClass("match-type")
+                  .text(matchType)
+                  .appendTo(".secM");
 
                 var logoHome = $("<img style='display: inline'>")
                   .addClass("logo-home")
@@ -473,7 +461,7 @@ $(document).ready(function () {
                 date = new Date(matchDate)
                 year = date.getFullYear();
                 dt = date.getDate();
-                month = date.getMonth()+1;
+                month = date.getMonth() + 1;
 
                 if (dt < 10) {
                   dt = '0' + dt;
@@ -489,27 +477,17 @@ $(document).ready(function () {
                 // increases count by 1
                 count++
               }
-            } 
+            }
           }
         })
       }
-<<<<<<< HEAD
-      // getStartingLineup(teamSearch);
-      //getTeamWinsLineups(teamSearch);
-      //getUpcomingFixtures(teamSearch);
-=======
       getStartingLineup();
       getTeamWinsLineups();
       getUpcomingFixtures();
->>>>>>> c3f1b2489b77fbf7d3c86e1d9ce7ae8f1a09759b
     });
   }
 
-<<<<<<< HEAD
-
-=======
   // getTeamOverview();
->>>>>>> 160f76e28b21f65055bd7aed9049dbee6d234d2c
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
@@ -611,46 +589,45 @@ $(document).ready(function () {
 });
 
 // ************************************************************************************
-  // ************************************************************************************
-  // ************************************************************************************
-  // **  
-  // **  <start> GIF Button <start>
-  // **  
-  // ************************************************************************************
-  // ************************************************************************************
-  // ***************************************************************************
-  // ************************************************************************************
-  
-  
-      $(".gifs").on("click", function() {
-        var teamSearch = "Chelsea"
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer "   +
-          teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
+// ************************************************************************************
+// ************************************************************************************
+// **  
+// **  <start> GIF Button <start>
+// **  
+// ************************************************************************************
+// ************************************************************************************
+// ***************************************************************************
+// ************************************************************************************
+
+
+$(".gifs").on("click", function () {
+  var teamSearch = "Chelsea"
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer " +
+    teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
   console.log("this works")
-  
-       $.ajax({
-          url: queryURL,
-          method: "GET"
-        })
-          .then(function(response) {
-            console.log(response)
-            var results = response.data;
-  
-            for (var i = 0; i < results.length; i++) {
-              var gifDiv = $("<div>");
-  
-              var rating = results[i].rating;
-  
-              var p = $("<p>").text("Rating: " + rating);
-  
-              var personImage = $("<img>");
-              personImage.attr("src", results[i].images.fixed_height.url);
-  
-              gifDiv.prepend(p);
-              gifDiv.prepend(personImage);
-  
-              $("#gifs-appear-here").prepend(gifDiv);
-            }
-         });
-      });
-  
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+    .then(function (response) {
+      console.log(response)
+      var results = response.data;
+
+      for (var i = 0; i < results.length; i++) {
+        var gifDiv = $("<div>");
+
+        var rating = results[i].rating;
+
+        var p = $("<p>").text("Rating: " + rating);
+
+        var personImage = $("<img>");
+        personImage.attr("src", results[i].images.fixed_height.url);
+
+        gifDiv.prepend(p);
+        gifDiv.prepend(personImage);
+
+        $("#gifs-appear-here").prepend(gifDiv);
+      }
+    });
+});
