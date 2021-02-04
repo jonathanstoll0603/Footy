@@ -3,6 +3,7 @@ body {
     margin: 0 auto;
     width: 100%;
     height: auto;
+    /* background-image: url("../../assets/images/background-stadium-img.jpg"); */
 }
 
 /* Top bar container - make sure when scrolling that top bar remains in front of all passing elements */
@@ -10,19 +11,15 @@ body {
 	z-index: 9999;
 }
 
+/* styling to the site title in navbar */
+.site-title {
+    font-weight: 700;
+}
+
 /* Grid container and it's sections below */
 .grid-container {
     margin-top: 20px;
     margin-bottom: 20px;
-}
-/* Search results container */
-#search-results {
-    border: 2px solid black;
-}
-
-/* Main content container */
-#main-container {
-    border: 2px solid black;
 }
 
  /* gives buttons borders */
