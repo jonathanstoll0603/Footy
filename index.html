@@ -136,13 +136,16 @@
           <div id="search-results" class="search-container cell small-2 small-cell-block-y">
             <div class="card">
               <div class="card-divider">
-                <h4>Search Cell:</h4>
+                <h4>Team Search</h4>
               </div>
-              <div class="card-section">
-                <ul class="search-section"></ul>
+              <div class="card-section cell small-12 small-cell-block-y">
+                <input class="form-control cell" type="text" id="search-value">
+                <button type="button" class="success button cell" id="search-button">Search</button>
+                <ul class="search-section list list-group history" id="previousHist"></ul>
               </div>
             </div>
           </div>
+
           <!-- main content section -->
           <div id="main-container" class="main-container cell small-7 small-cell-block-container">
             <div class="button-selection grid-x">
@@ -168,7 +171,7 @@
           <div id="top-headlines" class="headlines-container cell small-3 small-cell-block-y">
             <div class="card">
               <div class="card-divider">
-                <h4>Footy Headlines:</h4>
+                <h4>Footy Headlines</h4>
               </div>
               <div class="card-section">
                 <ul class="headline-section"></ul>
