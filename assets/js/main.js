@@ -8,6 +8,7 @@ $(document).ready(function () {
   var today_YYYYMMDD;
   var refreshData = false;
   var storedHeadlineData = [];
+  var liveScoreApiKey = "f3f1e57634mshb683402bb676480p196c9fjsn78dfd0c55f8f";
 
   // initialize foundation plugin.
   $(document).foundation();
@@ -60,10 +61,11 @@ $(document).ready(function () {
     }
 
     // store headline data into local storage.
-    function storeHeadlineDataInLocalStorage(headlineText, headlineUrl) {
+    function storeHeadlineDataInLocalStorage(headlineText, headlineUrl, headlineImage) {
       var newHeadlineDetails = {
         text: headlineText,
         url: headlineUrl,
+        image: headlineImage,
       };
       // Get existing stored details
       if (localStorage.getItem("headlineData") != null) {
@@ -89,8 +91,7 @@ $(document).ready(function () {
           "https://livescore-football.p.rapidapi.com/soccer/news-list?page=1",
         method: "GET",
         headers: {
-          "x-rapidapi-key":
-            "ff0210cd47msh983c81cf4ee3a53p1bc6d3jsn78402c8c5e1a",
+          "x-rapidapi-key": liveScoreApiKey,
           "x-rapidapi-host": "livescore-football.p.rapidapi.com",
         },
       };
@@ -103,11 +104,12 @@ $(document).ready(function () {
         // clear out old headline data from local storage before loading new data.
         localStorage.removeItem("headlineData");
         // loop thru response data 10 times to get top 10 headlines and then store in local storage.
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 14; i++) {
           var urlText = response.data[i].title;
           var urlLink = response.data[i].url;
+          var urlImage = response.data[i].image;
           // call function to store data to local storage.
-          storeHeadlineDataInLocalStorage(urlText, urlLink);
+          storeHeadlineDataInLocalStorage(urlText, urlLink, urlImage);
         }
         // call function to render headline data to the screen.
         renderHeadlineData();
@@ -117,14 +119,31 @@ $(document).ready(function () {
     function renderHeadlineData() {
       // call function to get headline data from local storage.
       getHeadlineDataFromLocalStorage();
+      var nth = 0;
+      $(".orbit-container li").empty();
       // loop round local storage headline data and build elements to screen.
       for (let i = 0; i < storedHeadlineData.length; i++) {
-        var newHeadline = $("<li>").addClass("headline");
-        var newHeadlineLink = $("<a>")
-          .attr({ href: storedHeadlineData[i].url, target: "_blank" })
-          .text(storedHeadlineData[i].text);
-        newHeadline.append(newHeadlineLink);
-        $(".headline-section").append(newHeadline);
+        if (i < 4) {
+          var orbitURL = storedHeadlineData[i].url;
+          var orbitImgSrc = storedHeadlineData[i].image;
+          var orbitFigcaptionText = storedHeadlineData[i].text;
+          var orbitFigureTag = $("<figure>").addClass("orbit-figure");
+          var orbitATag = $("<a>").attr({ href: orbitURL, target: "_blank" });
+          var orbitImgTag = $("<img>").addClass("orbit-image").attr({ src: orbitImgSrc, alt: "alt text" });
+          var orbitFigcaptionTag = $("<figcaption>").addClass("orbit-caption").text(orbitFigcaptionText);
+          orbitATag.append(orbitImgTag, orbitFigcaptionTag);
+          orbitFigureTag.append(orbitATag);
+          nth = nth + 1;
+          $(".orbit-container li:nth-child(" + nth + ")").append(orbitFigureTag);
+        }
+        else {
+          var newHeadline = $("<li>").addClass("headline");
+          var newHeadlineLink = $("<a>")
+            .attr({ href: storedHeadlineData[i].url, target: "_blank" })
+            .text(storedHeadlineData[i].text);
+          newHeadline.append(newHeadlineLink);
+          $(".headline-section").append(newHeadline);
+        }
       }
     }
   }
