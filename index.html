@@ -38,7 +38,7 @@
             <div class="top-bar-left">
               <ul class="menu">
                 <li class="menu-text site-title">Footy</li>
-                <li><a href="#">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="#">Coming Soon</a></li>
                 <li><a href="#">Coming Soon</a></li>
               </ul>
@@ -47,25 +47,27 @@
         </div>
       </div>
 
-      <!-- ticker bar -->
-      <div class="grid-x">
-        <div class="cell">
-          <div class="content">
-            <div class="simple-marquee-container">
-              <!-- <div class="marquee-sibling">
-                Latest Games:
-              </div> -->
-              <div class="marquee">
-                <ul class="marquee-content-items">
-                </ul>
+      <!-- Image container -->
+      <div class="grid-x fluid">
+        <div class="cell small-12 image-container">
+          <!-- ticker bar -->
+          <div class="grid-x">
+            <div class="cell">
+              <div class="content">
+                <div class="simple-marquee-container">
+                  <!-- <div class="marquee-sibling">
+                    Latest Games:
+                  </div> -->
+                  <div class="marquee">
+                    <ul class="marquee-content-items">
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="grid-container fluid">
-        <div class="grid-x grid-margin-x">
+          <!-- <div class="grid-container fluid"> -->
+            <div class="grid-x grid-margin-x grid-margin-y fluid">
           <div class="cell small-4 align-center-middle text-center"></div>
           <div class="cell small-4 align-center-middle text-center">
 
@@ -132,6 +134,13 @@
             </div>
           </div>
           <div class="cell small-4 align-center-middle text-center"></div>
+        </div>
+      </div>
+
+
+      <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+
           <!-- search section -->
           <div id="search-results" class="search-container cell small-2 small-cell-block-y">
             <div class="card">
@@ -158,13 +167,13 @@
             <div class="cell small-auto small-cell-block-container"></div>
             <div class="grid-x grid-padding-x">
               <div class="card cell small-12 small-cell-block-y card-top-main"></div>
-                <div class="card-divider divL small-12"></div>
-                <div class="card-section small-6 secL"></div>
-                <div class="card-section small-6 secR"></div>
+                <div class="card-divider divL small-12" id="top-divider"></div>
+                <div class="card-section small-6 secL" id="top-left-card"></div>
+                <div class="card-section small-6 secR" id="top-right-card"></div>
               <div class="card cell small-12 small-cell-block-y card-bottom-main"></div>
-                <div class="card-divider small-12 divM"></div>
-                <div class="card-section small-6 secM"></div>
-                <div class="card-section small-6 secN"></div>
+                <div class="card-divider small-12 divM" id="bottom-divider"></div>
+                <div class="card-section small-6 secM" id="bottom-left-card"></div>
+                <div class="card-section small-6 secN" id="bottom-right-card"></div>
             </div>
           </div>
           <!-- top footy headline section. -->
