@@ -610,48 +610,48 @@ $(document).ready(function () {
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
-});
-
-// ************************************************************************************
-// ************************************************************************************
-// ************************************************************************************
-// **  
-// **  <start> GIF Button <start>
-// **  
-// ************************************************************************************
-// ************************************************************************************
-// ***************************************************************************
-// ************************************************************************************
 
 
-$(".gifs").on("click", function () {
-  var teamSearch = "Chelsea"
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer " +
-    teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
-  console.log("this works")
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+  // **  
+  // **  <start> GIF Button <start>
+  // **  
+  // ************************************************************************************
+  // ************************************************************************************
+  // ***************************************************************************
+  // ************************************************************************************
 
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  })
-    .then(function (response) {
-      console.log(response)
-      var results = response.data;
 
-      for (var i = 0; i < results.length; i++) {
-        var gifDiv = $("<div>");
+  $(".gifs").on("click", function () {
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer " +
+      teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
+    console.log("this works")
 
-        var rating = results[i].rating;
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+      .then(function (response) {
+        console.log(response)
+        var results = response.data;
 
-        var p = $("<p>").text("Rating: " + rating);
+        for (var i = 0; i < results.length; i++) {
+          var gifDiv = $("<div>");
 
-        var personImage = $("<img>");
-        personImage.attr("src", results[i].images.fixed_height.url);
+          var rating = results[i].rating;
 
-        gifDiv.prepend(p);
-        gifDiv.prepend(personImage);
+          var p = $("<p>").text("Rating: " + rating);
 
-        $("#gifs-appear-here").prepend(gifDiv);
-      }
-    });
+          var personImage = $("<img>");
+          personImage.attr("src", results[i].images.fixed_height.url);
+
+          gifDiv.prepend(p);
+          gifDiv.prepend(personImage);
+
+          $(".card-top-main").prepend(gifDiv);
+        }
+      });
+  });
 });
