@@ -223,13 +223,13 @@ $(".history")append(listHist);
 
  })
 
+ $(".statistics").click(function() {
 
+  // clear old data and recall getTeamOverview function
+  $("#main-content").empty();
+  getTeamOverview(teamSearch);
 
-
-
-
-
-
+ })
 
   //Calls left cell of main container
   function getTeamOverview(teamSearch) {
@@ -249,11 +249,7 @@ $(".history")append(listHist);
     $.ajax(searchTeamInfo).done(function (response) {
 
       // Clears all old content that may be present within the main content container
-      $("#top-divider").empty();
-      $("#top-left-card").empty();
-      $("#top-right-card").empty();
-      $("#bottom-left-card").empty();
-      $("#bottom-right-card").empty();
+      $("#main-content").empty();
 
       // Grabs team ID to use as the parameter for another AJAX call
       var teamID = response.api.teams[0].team_id;
@@ -264,6 +260,35 @@ $(".history")append(listHist);
       var country = response.api.teams[0].country;
       var stadium = response.api.teams[0].venue_name;
       var stadiumCap = response.api.teams[0].venue_capacity;
+
+      var topDivider = $("<div>")
+      .addClass("card-divider divL small-12")
+      .attr("id", "top-divider")
+      .appendTo($("#main-content"));
+      var topLeftCard = $("<div>")
+        .addClass("card-section small-6 secL")
+        .attr("id", "top-left-card")
+        .appendTo($("#main-content"));
+    
+      var topRightCard = $("<div>")
+        .addClass("card-section small-6 secR")
+        .attr("id", "top-right-card")
+        .appendTo($("#main-content"));
+    
+      var bottomDivider = $("<div>")
+        .addClass("card-divider divM small-12")
+        .attr("id", "bottom-divider")
+        .appendTo($("#main-content"));
+    
+      var bottomLeftCard = $("<div>")
+        .addClass("card-section small-6 secM")
+        .attr("id", "bottom-left-card")
+        .appendTo($("#main-content"));
+    
+      var bottomRightCard = $("<div>")
+        .addClass("card-section small-6 secN")
+        .attr("id", "bottom-right-card")
+        .appendTo($("#main-content"));
 
       var teamName = $("<h3>")
         .addClass("team-name")
