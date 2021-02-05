@@ -647,9 +647,7 @@ $(document).ready(function () {
 
 
 
-          // var cooDiv = $("<video>");
-
-          // cooDiv.attr("src", response[0].url);
+          
 
 
 
