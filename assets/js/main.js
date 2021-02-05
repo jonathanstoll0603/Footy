@@ -495,7 +495,6 @@ $(document).ready(function () {
     });
   }
 
-  getTeamOverview();
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
@@ -610,7 +609,6 @@ $(document).ready(function () {
 
   $(".gifs").on("click", function () {
 
-    // Empties main content div on click so that videos can replace preexisting content
     $("#main-content").empty();
 
     var teamSearch = "Chelsea"
@@ -627,16 +625,11 @@ $(document).ready(function () {
         var results = response.data;
 
         for (var i = 0; i < results.length; i++) {
-          var gifDiv = $("<div>");
-
-          var rating = results[i].rating;
-
-          var p = $("<p>").text("Rating: " + rating);
+          var gifDiv = $("<div style='display: block'>");
 
           var personImage = $("<img>");
           personImage.attr("src", results[i].images.fixed_height.url);
 
-          gifDiv.prepend(p);
           gifDiv.prepend(personImage);
 
           $("#main-content").prepend(gifDiv);
@@ -648,7 +641,6 @@ $(document).ready(function () {
 
   $(".videos-play").on("click", function () {
 
-    // Empties main content div on click so that gifs can replace preexisting content
     $("#main-content").empty();
 
     console.log(teamSearch);
@@ -669,7 +661,7 @@ $(document).ready(function () {
       for (var i = 0; i < response.length; i++) {
 
         if (response[i].side1.name == teamSearch || response[i].side2.name == teamSearch) {
-
+          
           var videoDiv = $("<div>");
 
           videoDiv.append(response[i].embed);
