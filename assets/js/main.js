@@ -147,7 +147,7 @@ $(document).ready(function () {
   // ************************************************************************************
   // ************************************************************************************
   // Stores the value of the teamSearchBtn input by user and places it inside url
-//
+  //
   //Global Variable
   var teamSearch = $("#search-value").val();
   var savedSearches = [];
@@ -155,7 +155,7 @@ $(document).ready(function () {
 
   function saveSearch() {
 
-   
+
     localStorage.setItem("search-value", teamSearch);
     console.log(saveSearch);
   }
@@ -167,7 +167,7 @@ $(document).ready(function () {
     lastSearch.push(savedSearches);
 
     for (var i = 0; i < savedSearches.length; i++) {
-      var searchHistoryList = $("<div>" + savedSearches[i] + "</div>"); 
+      var searchHistoryList = $("<div>" + savedSearches[i] + "</div>");
 
       searchList.append(searchHistoryList);
 
@@ -181,13 +181,13 @@ $(document).ready(function () {
 
     // }
 
-// this is how the list was made on my weather daashboard hw
+    // this is how the list was made on my weather daashboard hw
 
-function makeList(){
-  let listItem = $("<li>").addClass("history").text(teamSearch);
-  $(".newClass/history").append(listItem);
-}
-const listHist = $("<li>").addClass("history").text(search-value);
+    function makeList() {
+      let listItem = $("<li>").addClass("history").text(teamSearch);
+      $(".newClass/history").append(listItem);
+    }
+    const listHist = $("<li>").addClass("history").text(search - value);
 
 
 
@@ -204,9 +204,9 @@ const listHist = $("<li>").addClass("history").text(search-value);
 
 
 
-/*listHist.append(".history")
-$(".history")append(listHist);
-*/
+      /*listHist.append(".history")
+      $(".history")append(listHist);
+      */
 
     }
 
@@ -217,11 +217,11 @@ $(".history")append(listHist);
 
 
 
-   getTeamOverview(teamSearch);
-   //saveSearch();
-   $("#search-value").val("");
+    getTeamOverview(teamSearch);
+    //saveSearch();
+    $("#search-value").val("");
 
- })
+  })
 
 
 
@@ -586,48 +586,48 @@ $(".history")append(listHist);
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
-});
-
-// ************************************************************************************
-// ************************************************************************************
-// ************************************************************************************
-// **  
-// **  <start> GIF Button <start>
-// **  
-// ************************************************************************************
-// ************************************************************************************
-// ***************************************************************************
-// ************************************************************************************
 
 
-$(".gifs").on("click", function () {
-  var teamSearch = "Chelsea"
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer " +
-    teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
-  console.log("this works")
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+  // **  
+  // **  <start> GIF Button <start>
+  // **  
+  // ************************************************************************************
+  // ************************************************************************************
+  // ***************************************************************************
+  // ************************************************************************************
 
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  })
-    .then(function (response) {
-      console.log(response)
-      var results = response.data;
 
-      for (var i = 0; i < results.length; i++) {
-        var gifDiv = $("<div>");
+  $(".gifs").on("click", function () {
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer " +
+      teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
+    console.log("this works")
 
-        var rating = results[i].rating;
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+      .then(function (response) {
+        console.log(response)
+        var results = response.data;
 
-        var p = $("<p>").text("Rating: " + rating);
+        for (var i = 0; i < results.length; i++) {
+          var gifDiv = $("<div>");
 
-        var personImage = $("<img>");
-        personImage.attr("src", results[i].images.fixed_height.url);
+          var rating = results[i].rating;
 
-        gifDiv.prepend(p);
-        gifDiv.prepend(personImage);
+          var p = $("<p>").text("Rating: " + rating);
 
-        $("#gifs-appear-here").prepend(gifDiv);
-      }
-    });
+          var personImage = $("<img>");
+          personImage.attr("src", results[i].images.fixed_height.url);
+
+          gifDiv.prepend(p);
+          gifDiv.prepend(personImage);
+
+          $(".card-top-main").prepend(gifDiv);
+        }
+      });
+  });
 });
