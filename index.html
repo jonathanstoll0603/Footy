@@ -19,6 +19,9 @@
   <link href="./assets/css/marquee.css" rel="stylesheet" />
   <link href="./assets/css/style.css" rel="stylesheet" />
 
+  
+
+
   <!-- Script links (all with defer)-->
   <script defer src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -51,10 +54,9 @@
               </ul>
             </div>
             <div class="top-bar-right">
-              <ul class="menu">
-                <li><input type="search" placeholder="Search" /></li>
-                <li><button type="button" class="button">Search</button></li>
-              </ul>
+            
+              
+              
             </div>
           </div>
         </div>
@@ -77,6 +79,8 @@
         </div>
       </div>
 
+      
+      
       <div class="grid-container fluid">
         <div class="grid-x grid-margin-x">
           <div class="cell small-4 align-center-middle text-center"></div>
@@ -153,7 +157,7 @@
           <button type="button" class="success button" id="search-button">Search</button>
           
           <ul class="list-group history" id = "previousHist">
-<!--you might have to add a class in here too if this doesnt work -->
+
           </ul>
         
         
@@ -169,7 +173,12 @@
           <div id="main-container" class="main-container cell small-7 small-cell-block-container">
             <div class="button-selection grid-x">
               <a class="success cell small-4 button statistics">Statistics</a>
-              <a class="success button cell small-4 videos">Videos</a>
+              <a class="success button cell small-4 videos-play">Videos</a>
+              <video id="video" height="300" width="500" style="display: none" controls></video>
+
+
+
+
               <a class="success button cell small-4 gifs">Gifs</a>
               
 

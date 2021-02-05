@@ -147,15 +147,18 @@ $(document).ready(function () {
   // ************************************************************************************
   // ************************************************************************************
   // Stores the value of the teamSearchBtn input by user and places it inside url
-//
+  //
   //Global Variable
   var teamSearch = $("#search-value").val();
   var savedSearches = [];
   var searchList = $(".history");
 
+
+  // Local Storage for usuer input
+
   function saveSearch() {
 
-   
+
     localStorage.setItem("search-value", teamSearch);
     console.log(saveSearch);
   }
@@ -164,69 +167,38 @@ $(document).ready(function () {
     var lastSearch = localStorage.getItem("search-value");
     console.log(lastSearch);
 
-    lastSearch.push(savedSearches);
 
-    for (var i = 0; i < savedSearches.length; i++) {
-      var searchHistoryList = $("<div>" + savedSearches[i] + "</div>"); 
-
-      searchList.append(searchHistoryList);
-
-    }
-
-
-
-    // if (lastSearch !== null) {
-
-    //   $("#search-value")
-
-    // }
-
-// this is how the list was made on my weather daashboard hw
-
-function makeList(){
-  let listItem = $("<li>").addClass("history").text(teamSearch);
-  $(".newClass/history").append(listItem);
-}
-const listHist = $("<li>").addClass("history").text(search-value);
-
-
-
-
-
-
-    for (var i = 0; i < savedSearches.length; i++) {
-      var save = savedSearches[i];
-
-      var li = $("<li>");
-
-      li.text(teamSearch);
-      li.appendTo$(".history");
-
-
-
-/*listHist.append(".history")
-$(".history")append(listHist);
-*/
-
-    }
-
-    //search button click event
   }
+
+
+
+
+  //   $("#search-value")
+
+  // }
+
+
+
+
+
+  //search button click event
+
+
   $("#search-button").on("click", function () {
     teamSearch = $("#search-value").val();
 
 
 
-   getTeamOverview(teamSearch);
-   //saveSearch();
-   $("#search-value").val("");
-
- })
-
-
+    getTeamOverview(teamSearch);
+    saveSearch();
+    $("#search-value").val("");
+    renderPastSearchHistory()
+  })
 
 
 
+
+  $("#search-value").val("");
 
 
 
@@ -586,48 +558,134 @@ $(".history")append(listHist);
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
-});
-
-// ************************************************************************************
-// ************************************************************************************
-// ************************************************************************************
-// **  
-// **  <start> GIF Button <start>
-// **  
-// ************************************************************************************
-// ************************************************************************************
-// ***************************************************************************
-// ************************************************************************************
 
 
-$(".gifs").on("click", function () {
-  var teamSearch = "Chelsea"
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer " +
-    teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
-  console.log("this works")
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+  // **  
+  // **  <start> GIF Button <start>
+  // **  
+  // ************************************************************************************
+  // ************************************************************************************
+  // ***************************************************************************
+  // ************************************************************************************
 
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  })
-    .then(function (response) {
-      console.log(response)
-      var results = response.data;
 
-      for (var i = 0; i < results.length; i++) {
-        var gifDiv = $("<div>");
+  $(".gifs").on("click", function () {
+    var teamSearch = "Chelsea"
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer " +
+      teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
+    console.log("this works")
 
-        var rating = results[i].rating;
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+      .then(function (response) {
+        console.log(response)
+        var results = response.data;
 
-        var p = $("<p>").text("Rating: " + rating);
+        for (var i = 0; i < results.length; i++) {
+          var gifDiv = $("<div>");
 
-        var personImage = $("<img>");
-        personImage.attr("src", results[i].images.fixed_height.url);
+          var rating = results[i].rating;
 
-        gifDiv.prepend(p);
-        gifDiv.prepend(personImage);
+          var p = $("<p>").text("Rating: " + rating);
 
-        $("#gifs-appear-here").prepend(gifDiv);
+          var personImage = $("<img>");
+          personImage.attr("src", results[i].images.fixed_height.url);
+
+          gifDiv.prepend(p);
+          gifDiv.prepend(personImage);
+
+          $("#gifs-appear-here").prepend(gifDiv);
+        }
+      });
+  });
+
+  //Videos
+
+  $(".videos-play").on("click", function () {
+    console.log(teamSearch);
+    //  teamSearch = $("#search-value").val();
+    const teamVideos = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://free-football-soccer-videos1.p.rapidapi.com/v1/",
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-key": "aeabad8553msh11cb2e7ac9c5193p124085jsnee00adb6b2ab",
+        "x-rapidapi-host": "free-football-soccer-videos1.p.rapidapi.com"
       }
+    };
+
+    $.ajax(teamVideos).then(function (response) {
+
+
+
+
+
+      // var results = response.;
+
+
+
+
+      for (var i = 0; i < response.length; i++) {
+
+
+
+        console.log(response[i].side1.name);
+        console.log(response[i].side2.name);
+        console.log(teamSearch);
+
+        if (response[i].side1.name == teamSearch || response[i].side2.name == teamSearch) {
+
+
+          var videoDiv = $("<div>");
+
+
+
+
+          // var cooDiv = $("<video>");
+
+          // cooDiv.attr("src", response[0].url);
+
+
+
+
+          videoDiv.append(response[i].embed);
+
+
+
+          $(".card-top-main").append(videoDiv);
+
+
+
+
+
+        }
+
+
+
+
+      }
+
+
     });
+
+
+  });
+
+
 });
+
+
+
+
+
+
+
+
+
+
