@@ -8,6 +8,7 @@ $(document).ready(function () {
   var today_YYYYMMDD;
   var refreshData = false;
   var storedHeadlineData = [];
+  var liveScoreApiKey = "f3f1e57634mshb683402bb676480p196c9fjsn78dfd0c55f8f";
 
   // initialize foundation plugin.
   $(document).foundation();
@@ -60,10 +61,11 @@ $(document).ready(function () {
     }
 
     // store headline data into local storage.
-    function storeHeadlineDataInLocalStorage(headlineText, headlineUrl) {
+    function storeHeadlineDataInLocalStorage(headlineText, headlineUrl, headlineImage) {
       var newHeadlineDetails = {
         text: headlineText,
         url: headlineUrl,
+        image: headlineImage,
       };
       // Get existing stored details
       if (localStorage.getItem("headlineData") != null) {
@@ -89,8 +91,7 @@ $(document).ready(function () {
           "https://livescore-football.p.rapidapi.com/soccer/news-list?page=1",
         method: "GET",
         headers: {
-          "x-rapidapi-key":
-            "ff0210cd47msh983c81cf4ee3a53p1bc6d3jsn78402c8c5e1a",
+          "x-rapidapi-key": liveScoreApiKey,
           "x-rapidapi-host": "livescore-football.p.rapidapi.com",
         },
       };
@@ -103,11 +104,12 @@ $(document).ready(function () {
         // clear out old headline data from local storage before loading new data.
         localStorage.removeItem("headlineData");
         // loop thru response data 10 times to get top 10 headlines and then store in local storage.
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 14; i++) {
           var urlText = response.data[i].title;
           var urlLink = response.data[i].url;
+          var urlImage = response.data[i].image;
           // call function to store data to local storage.
-          storeHeadlineDataInLocalStorage(urlText, urlLink);
+          storeHeadlineDataInLocalStorage(urlText, urlLink, urlImage);
         }
         // call function to render headline data to the screen.
         renderHeadlineData();
@@ -117,14 +119,31 @@ $(document).ready(function () {
     function renderHeadlineData() {
       // call function to get headline data from local storage.
       getHeadlineDataFromLocalStorage();
+      var nth = 0;
+      $(".orbit-container li").empty();
       // loop round local storage headline data and build elements to screen.
       for (let i = 0; i < storedHeadlineData.length; i++) {
-        var newHeadline = $("<li>").addClass("headline");
-        var newHeadlineLink = $("<a>")
-          .attr({ href: storedHeadlineData[i].url, target: "_blank" })
-          .text(storedHeadlineData[i].text);
-        newHeadline.append(newHeadlineLink);
-        $(".headline-section").append(newHeadline);
+        if (i < 4) {
+          var orbitURL = storedHeadlineData[i].url;
+          var orbitImgSrc = storedHeadlineData[i].image;
+          var orbitFigcaptionText = storedHeadlineData[i].text;
+          var orbitFigureTag = $("<figure>").addClass("orbit-figure");
+          var orbitATag = $("<a>").attr({ href: orbitURL, target: "_blank" });
+          var orbitImgTag = $("<img>").addClass("orbit-image").attr({ src: orbitImgSrc, alt: "alt text" });
+          var orbitFigcaptionTag = $("<figcaption>").addClass("orbit-caption").text(orbitFigcaptionText);
+          orbitATag.append(orbitImgTag, orbitFigcaptionTag);
+          orbitFigureTag.append(orbitATag);
+          nth = nth + 1;
+          $(".orbit-container li:nth-child(" + nth + ")").append(orbitFigureTag);
+        }
+        else {
+          var newHeadline = $("<li>").addClass("headline");
+          var newHeadlineLink = $("<a>")
+            .attr({ href: storedHeadlineData[i].url, target: "_blank" })
+            .text(storedHeadlineData[i].text);
+          newHeadline.append(newHeadlineLink);
+          $(".headline-section").append(newHeadline);
+        }
       }
     }
   }
@@ -147,15 +166,18 @@ $(document).ready(function () {
   // ************************************************************************************
   // ************************************************************************************
   // Stores the value of the teamSearchBtn input by user and places it inside url
-//
+  //
   //Global Variable
   var teamSearch = $("#search-value").val();
   var savedSearches = [];
   var searchList = $(".history");
 
+
+  // Local Storage for usuer input
+
   function saveSearch() {
 
-   
+
     localStorage.setItem("search-value", teamSearch);
     console.log(saveSearch);
   }
@@ -164,58 +186,11 @@ $(document).ready(function () {
     var lastSearch = localStorage.getItem("search-value");
     console.log(lastSearch);
 
-    lastSearch.push(savedSearches);
 
-    for (var i = 0; i < savedSearches.length; i++) {
-      var searchHistoryList = $("<div>" + savedSearches[i] + "</div>"); 
-
-      searchList.append(searchHistoryList);
-
-    }
-
-
-
-    // if (lastSearch !== null) {
-
-    //   $("#search-value")
-
-    // }
-
-// this is how the list was made on my weather daashboard hw
-
-function makeList(){
-  let listItem = $("<li>").addClass("history").text(teamSearch);
-  $(".newClass/history").append(listItem);
-}
-const listHist = $("<li>").addClass("history").text(search-value);
-
-
-
-
-
-
-    for (var i = 0; i < savedSearches.length; i++) {
-      var save = savedSearches[i];
-
-      var li = $("<li>");
-
-      li.text(teamSearch);
-      li.appendTo$(".history");
-
-
-
-/*listHist.append(".history")
-$(".history")append(listHist);
-*/
-
-    }
-
-    //search button click event
   }
+
   $("#search-button").on("click", function () {
     teamSearch = $("#search-value").val();
-
-
 
    getTeamOverview(teamSearch);
    //saveSearch();
@@ -261,6 +236,7 @@ $(".history")append(listHist);
       var stadium = response.api.teams[0].venue_name;
       var stadiumCap = response.api.teams[0].venue_capacity;
 
+      // Dynamically Adds in the div containers and sections for the statistics api
       var topDivider = $("<div>")
       .addClass("card-divider divL small-12")
       .attr("id", "top-divider")
@@ -341,6 +317,7 @@ $(".history")append(listHist);
         };
 
         $.ajax(searchTeamStats).done(function (response) {
+          console.log(response);
 
           // stores api response for the list of titles a team has won
           var titles = response.api.leagues;
@@ -393,7 +370,7 @@ $(".history")append(listHist);
         };
 
         $.ajax(searchTeamStats).done(function (response) {
-          console.log(response)
+
           // Lineup header appended to divR
           var lineupHeader = $("<p style='font-size: 18px'>")
             .addClass("lineup-header")
@@ -461,6 +438,7 @@ $(".history")append(listHist);
                 var awayLogo = fixtures[k].awayTeam.logo;
                 var matchDate = fixtures[k].event_date;
                 var matchType = fixtures[k].league.name;
+                console.log(matchDate)
 
                 var type = $("<p style='font-size: 12px'>")
                   .addClass("match-type")
@@ -517,7 +495,7 @@ $(".history")append(listHist);
     });
   }
 
-  getTeamOverview(teamSearch);
+  getTeamOverview();
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
@@ -616,48 +594,90 @@ $(".history")append(listHist);
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
-});
-
-// ************************************************************************************
-// ************************************************************************************
-// ************************************************************************************
-// **  
-// **  <start> GIF Button <start>
-// **  
-// ************************************************************************************
-// ************************************************************************************
-// ***************************************************************************
-// ************************************************************************************
 
 
-$(".gifs").on("click", function () {
-  var teamSearch = "Chelsea"
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer " +
-    teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
-  console.log("this works")
+  // ************************************************************************************
+  // ************************************************************************************
+  // ************************************************************************************
+  // **  
+  // **  <start> GIF Button <start>
+  // **  
+  // ************************************************************************************
+  // ************************************************************************************
+  // ***************************************************************************
+  // ************************************************************************************
 
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  })
-    .then(function (response) {
-      console.log(response)
-      var results = response.data;
 
-      for (var i = 0; i < results.length; i++) {
-        var gifDiv = $("<div>");
+  $(".gifs").on("click", function () {
 
-        var rating = results[i].rating;
+    // Empties main content div on click so that videos can replace preexisting content
+    $("#main-content").empty();
 
-        var p = $("<p>").text("Rating: " + rating);
+    var teamSearch = "Chelsea"
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + "soccer " +
+      teamSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
+    console.log("this works")
 
-        var personImage = $("<img>");
-        personImage.attr("src", results[i].images.fixed_height.url);
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+      .then(function (response) {
+        console.log(response)
+        var results = response.data;
 
-        gifDiv.prepend(p);
-        gifDiv.prepend(personImage);
+        for (var i = 0; i < results.length; i++) {
+          var gifDiv = $("<div>");
 
-        $("#gifs-appear-here").prepend(gifDiv);
+          var rating = results[i].rating;
+
+          var p = $("<p>").text("Rating: " + rating);
+
+          var personImage = $("<img>");
+          personImage.attr("src", results[i].images.fixed_height.url);
+
+          gifDiv.prepend(p);
+          gifDiv.prepend(personImage);
+
+          $("#main-content").prepend(gifDiv);
+        }
+      });
+  });
+
+  //Videos
+
+  $(".videos-play").on("click", function () {
+
+    // Empties main content div on click so that gifs can replace preexisting content
+    $("#main-content").empty();
+
+    console.log(teamSearch);
+    //  teamSearch = $("#search-value").val();
+    const teamVideos = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://free-football-soccer-videos1.p.rapidapi.com/v1/",
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-key": "aeabad8553msh11cb2e7ac9c5193p124085jsnee00adb6b2ab",
+        "x-rapidapi-host": "free-football-soccer-videos1.p.rapidapi.com"
+      }
+    };
+
+    $.ajax(teamVideos).then(function (response) {
+
+      for (var i = 0; i < response.length; i++) {
+
+        if (response[i].side1.name == teamSearch || response[i].side2.name == teamSearch) {
+
+          var videoDiv = $("<div>");
+
+          videoDiv.append(response[i].embed);
+
+          $("#main-content").append(videoDiv);
+
+        }
       }
     });
+  });
 });
