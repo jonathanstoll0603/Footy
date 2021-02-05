@@ -248,6 +248,13 @@ $(".history")append(listHist);
 
     $.ajax(searchTeamInfo).done(function (response) {
 
+      // Clears all old content that may be present within the main content container
+      $("#top-divider").empty();
+      $("#top-left-card").empty();
+      $("#top-right-card").empty();
+      $("#bottom-left-card").empty();
+      $("#bottom-right-card").empty();
+
       // Grabs team ID to use as the parameter for another AJAX call
       var teamID = response.api.teams[0].team_id;
       // Stores the team logo url, the team name, country of origin, and founding date
@@ -361,7 +368,7 @@ $(".history")append(listHist);
         };
 
         $.ajax(searchTeamStats).done(function (response) {
-
+          console.log(response)
           // Lineup header appended to divR
           var lineupHeader = $("<p style='font-size: 18px'>")
             .addClass("lineup-header")
@@ -485,7 +492,7 @@ $(".history")append(listHist);
     });
   }
 
-  // getTeamOverview();
+  getTeamOverview(teamSearch);
   // ************************************************************************************
   // ************************************************************************************
   // ************************************************************************************
