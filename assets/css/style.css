@@ -101,6 +101,18 @@ body {
 .headline {
     border-bottom: 1px solid #000;
   }
+
+/* For the gif container and images themselves */
+.gif-div {
+    text-align: center;
+}
+
+.gif-img {
+    display: inline-block;
+    height: 200px;
+    width: 200px;
+    margin: 10px 10px;
+}
   
 #page-container {
     position: relative;
